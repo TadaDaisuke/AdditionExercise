@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        body {
+            font-family: Verdana, "游ゴシック", YuGothic, "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+        }
+    </style>
+    <title>たすれんしゅう</title>
+</head>
+<body>
+    <script>
+        $(function () {
+            $("#next").click(function () {
+                if ($("#kotae").text() == "?") {
+                    DisplayAnswar();
+                } else {
+                    SetNextNumber();
+                }
+            });
+
+            $("[id^=tasu_]").click(function () {
+                SetNumber($(this).attr("id").substr(5));
+            });
+
+            $("#tasu_4").click();
+        });
+
+        function SetNumber(num) {
+            $("#tasu").text(num);
+            SetNextNumber();
+        }
+
+        function SetNextNumber() {
+            var current = Number($("#kazu").text());
+            var rnd = current;
+            for (; ;) {
+                rnd = Math.floor(Math.random() * 10) + 1;
+                if (current != rnd) break;
+            }
+            $("#kazu").text(rnd);
+            $("#kotae").text("?");
+            $("#next").text("こたえ");
+            $("#next").removeClass("btn-primary");
+            $("#next").addClass("btn-warning");
+        }
+
+        function DisplayAnswar() {
+            $("#kotae").text(Number($("#kazu").text()) + Number($("#tasu").text()));
+            $("#next").text("つぎ");
+            $("#next").removeClass("btn-warning");
+            $("#next").addClass("btn-primary");
+        }
+    </script>
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="navbar-brand">たすれんしゅう</div>
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-default navbar-btn" id="tasu_1">
+                    <input type="radio">+ 1
+                </label>
+                <label class="btn btn-default navbar-btn" id="tasu_2">
+                    <input type="radio">+ 2
+                </label>
+                <label class="btn btn-default navbar-btn" id="tasu_3">
+                    <input type="radio">+ 3
+                </label>
+                <label class="btn btn-default navbar-btn" id="tasu_4">
+                    <input type="radio">+ 4
+                </label>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row jumbotron">
+            <div class="col-xs-2"></div>
+            <div class="col-xs-2 h1 text-center" id="kazu"></div>
+            <div class="col-xs-1 h1 text-center">+</div>
+            <div class="col-xs-2 h1 text-center" id="tasu" style="color:limegreen">3</div>
+            <div class="col-xs-1 h1 text-center">=</div>
+            <div class="col-xs-2 h1 text-center" id="kotae">?</div>
+            <div class="col-xs-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <a href="#" class="col-xs-6 btn btn-primary btn-lg" id="next"></a>
+            <div class="col-xs-3"></div>
+        </div>
+    </div>
+</body>
+</html>
